@@ -1,0 +1,130 @@
+
+<section class="image-block-section">
+  <div class="container">
+     {% if section.settings.section_title != blank %}
+      <h2 class="section-title">{{ section.settings.section_title }}</h2>
+    {% endif %}
+    <div class="row">
+      {% assign columns = section.settings.columns | default: 3 %}
+      
+      {% for block in section.blocks %}
+        <div class="col-{{ columns }}">
+          <div class="image-block">
+          <div class="mediaimg">  <img src="{{ block.settings.image | img_url: 'large' }}" alt="{{ block.settings.image.alt }}"></div>
+            <h3>{{ block.settings.title }}</h3>
+            <p>{{ block.settings.text }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+.image-block-section {
+	background: #f7f7f7;
+	padding: 50px 0;
+}
+ .image-block-section h2 {
+    font-size: calc(1.0 * 4rem);
+  }
+  .container{
+    max-width:1260px;
+    margin:0 auto
+  }
+  .image-block-section .row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+   .section-title {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    font-weight: bold;
+    text-align: center;
+  }
+  .image-block-section .col-{{ columns }} {
+    width: calc(100% / {{ columns }});
+    padding: 10px;
+  }
+  .image-block {
+    text-align: center;
+    padding: 20px;
+  }
+.image-block p {
+	font-size: 14px;
+	letter-spacing: 0;
+	padding: 0 20px;
+}
+
+ .image-block h3 {
+	font-size: calc(1.0 * 1.9rem);
+	font-weight: 600;
+	letter-spacing: 0;
+}
+  
+.image-block img {
+	max-width: 100%;
+	height: auto;
+	width: 100%;
+  transition: all .3s linear;
+}
+.image-block:hover img {
+	transform: scale3d(1.1,1.1,1);
+}
+
+.mediaimg {
+	display: block;
+	position: relative;
+	overflow: hidden;
+}
+  
+</style>
+
+{% schema %}
+{
+  "name": "Image Block Section",
+  "settings": [
+     {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "Our Healthy Choices"
+    },
+    {
+      "type": "number",
+      "id": "columns",
+      "label": "Number of Columns",
+      "default": 3
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image_block",
+      "name": "Image Block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Block Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Block Title"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Block Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image Block Section",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
